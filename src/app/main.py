@@ -1,7 +1,6 @@
-"""Main entry point for the service.
+"""Main entry point for the test writer service.
 
-This script initializes logging, loads the queue consumer, and begins
-consuming data using the configured processing callback.
+This script initializes logging and consumes messages to validate and display output behavior.
 """
 
 import os
@@ -11,31 +10,30 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from app import config_shared
-from app.output_handler import send_to_output
 from app.queue_handler import consume_messages
 from app.utils.setup_logger import setup_logger
 
-# Initialize the module-level logger with optional structured logging
+# Use structured logging if enabled
 logger = setup_logger(
     __name__,
     structured=config_shared.get_config_bool("STRUCTURED_LOGGING", False),
 )
 
 
-def main() -> None:
-    """Start the data processing service.
+def test_output_callback(message: dict) -> None:
+    """Callback that logs the received message for testing purposes."""
+    logger.info("📥 Received test message: %s", message)
 
-    This function initializes the service by calling the queue consumer,
-    which begins listening to RabbitMQ or SQS and processes data using
-    the `send_to_output` callback.
-    """
-    logger.info("🚀 Starting processing service...")
-    consume_messages(send_to_output)
+
+def main() -> None:
+    """Start the test output consumer."""
+    logger.info("🚀 Starting test writer service...")
+    consume_messages(test_output_callback)
 
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        logger.exception("❌ Unhandled exception in main: %s", e)
+        logger.exception("❌ Unhandled exception: %s", e)
         sys.exit(1)
