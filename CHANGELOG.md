@@ -7,6 +7,12 @@
 - Initial project structure cloned from `template_python`
 - Custom configuration and module setup for `stock-backtest-writer-test`
 
+## v0.2.1 (2025-07-26)
+
+### Fix
+
+- remediate vulnerabilities and sync new shared config utlities
+
 ## v0.2.0 (2025-07-01)
 
 ### Feat
