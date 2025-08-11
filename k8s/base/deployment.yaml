@@ -16,7 +16,7 @@ spec:
         app: stock-backtest-writer-test
     spec:
       containers:
-      - name: stock-backtest-writer-test
-        image: stock-backtest-writer-test:latest
-        ports:
-        - containerPort: 8080
+        - name: stock-backtest-writer-test
+          image: stock-backtest-writer-test:latest
+          ports:
+            - containerPort: 8080
